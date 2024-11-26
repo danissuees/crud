@@ -1,4 +1,4 @@
-require('dotenv').config(); // Carga las variables de entorno desde el archivo .env
+
 
 const express = require('express');
 const path = require('path');
@@ -40,13 +40,11 @@ const upload = multer({ storage: storage });
 
 // Conexión a la base de datos
 const db = mysql.createConnection({
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE,
-    port: process.env.MYSQL_PORT
+    host: 'localhost',
+    user: 'root',
+    password: '1234567',
+    database: 'musicadb'
 });
-
 db.connect(err => {
     if (err) {
         console.error('Error al conectar a la base de datos:', err);
@@ -134,6 +132,49 @@ app.get('/albumes/:id/pdf', (req, res) => {
         res.sendFile(pdfPath);
     });
 });
+
+app.delete('/albumes/:id', (req, res) => {
+    const albumId = req.params.id;
+
+    const query = 'DELETE FROM albumes WHERE AlbumID = ?';
+    db.query(query, [albumId], (err, result) => {
+        if (err) {
+            console.error('Error al eliminar el álbum:', err);
+            return res.status(500).send('Error al eliminar el álbum');
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).send('Álbum no encontrado');
+        }
+
+        res.status(200).send('Álbum eliminado con éxito');
+    });
+});
+
+app.put('/albumes/:id', (req, res) => {
+    const albumId = req.params.id;
+    const { Titulo, Artista, Genero, FechaLanzamiento, DuracionTotal, Productora } = req.body;
+
+    const query = `
+        UPDATE albumes 
+        SET Titulo = ?, Artista = ?, Genero = ?, FechaLanzamiento = ?, DuracionTotal = ?, Productora = ?
+        WHERE AlbumID = ?
+    `;
+
+    db.query(query, [Titulo, Artista, Genero, FechaLanzamiento, DuracionTotal, Productora, albumId], (err, result) => {
+        if (err) {
+            console.error('Error al modificar el álbum:', err);
+            return res.status(500).send('Error al modificar el álbum');
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).send('Álbum no encontrado');
+        }
+
+        res.status(200).send('Álbum modificado con éxito');
+    });
+});
+
 
 // Inicio del servidor
 app.listen(port, () => {
