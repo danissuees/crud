@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Álbumes Musicales</title>
     <style>
-        /* Tu CSS */
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
@@ -13,6 +13,7 @@
             background-color: #121212;
             color: #eaeaea;
         }
+
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -22,6 +23,7 @@
             padding: 10px 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
+
         .navbar a {
             color: white;
             text-decoration: none;
@@ -29,40 +31,76 @@
             border-radius: 20px;
             transition: background-color 0.3s ease;
         }
+
         .navbar a:hover {
             background-color: #14833b;
         }
+
         .content {
             padding: 20px;
         }
+
         .hidden {
             display: none;
         }
+
         form {
             max-width: 400px;
             margin: auto;
             padding: 20px;
+            border: none;
             border-radius: 10px;
             background-color: #1e1e1e;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
         }
+
         form h2 {
             text-align: center;
             color: #1db954;
+            margin-bottom: 20px;
         }
-        input, select, button {
+
+        label {
             display: block;
-            width: 100%;
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 5px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #b3b3b3;
         }
+
+        input[type="text"], input[type="number"], input[type="date"], input[type="file"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #3a3a3a;
+            border-radius: 5px;
+            background-color: #2a2a2a;
+            color: white;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #1db954;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #14833b;
+        }
+
         .album-container {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
         }
+
         .album {
             display: flex;
             flex-direction: row;
@@ -70,33 +108,157 @@
             border-radius: 10px;
             background-color: #1e1e1e;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
             width: 600px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
+        .album:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.7);
+        }
+
         .album img {
             width: 200px;
             height: 200px;
             object-fit: cover;
+            border-right: 2px solid #121212;
         }
+
         .album-details {
             padding: 20px;
             flex: 1;
         }
+
         .album-details h3 {
+            margin: 0 0 10px;
             color: #1db954;
         }
-        .album-details .buttons button {
-            margin-right: 5px;
+
+        .album-details p {
+            margin: 5px 0;
+            color: #b3b3b3;
+            font-size: 14px;
+        }
+
+        .album-details .buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .album-details a {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: white;
+            background-color: #1db954;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .album-details a:hover {
+            background-color: #14833b;
+        }
+
+        .edit-button {
+            padding: 10px 15px;
+            color: white;
+            background-color: #f4c242;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .edit-button:hover {
+            background-color: #d9a635;
+        }
+
+        .delete-button {
+            padding: 10px 15px;
+            color: white;
+            background-color: #e53935; /* Botón rojo */
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-button:hover {
+            background-color: #c62828;
+        }
+
+        /* Modal estilo */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content h2 {
+            color: #1db954;
+            text-align: center;
+        }
+
+        .modal-content label {
+            display: block;
+            margin-bottom: 8px;
+            color: #b3b3b3;
+        }
+
+        .modal-content input, .modal-content select {
+            width: 100%;
             padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #3a3a3a;
             border-radius: 5px;
+            background-color: #2a2a2a;
+            color: white;
+        }
+
+        .modal-content button {
+            width: 100%;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #1db954;
             color: white;
             border: none;
+            border-radius: 20px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
-        .album-details .buttons .edit-button {
-            background-color: #f4c242;
+
+        .modal-content button:hover {
+            background-color: #14833b;
         }
-        .album-details .buttons .delete-button {
-            background-color: #e53935;
+
+        .modal-close {
+            text-align: right;
+            cursor: pointer;
+            color: #b3b3b3;
+            font-size: 16px;
+        }
+
+        .modal-close:hover {
+            color: white;
         }
     </style>
 </head>
