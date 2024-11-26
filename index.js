@@ -131,6 +131,22 @@ app.get('/albumes/:id/pdf', (req, res) => {
     });
 });
 
+app.get('/albumes/buscar', (req, res) => {
+    const { query } = req.query; 
+    const searchQuery = `
+        SELECT AlbumID AS id, Titulo, Artista, Genero, FechaLanzamiento, DuracionTotal, Productora, Imagen, ImagenPDF 
+        FROM albumes 
+        WHERE Titulo LIKE ?`;
+    db.query(searchQuery, [`%${query}%`], (err, results) => {
+        if (err) {
+            console.error('Error al buscar álbumes:', err);
+            return res.status(500).send('Error al buscar álbumes');
+        }
+        res.json(results);
+    });
+});
+
+
 app.delete('/albumes/:id', (req, res) => {
     const albumId = req.params.id;
 

@@ -263,6 +263,10 @@
 
         <div id="viewAlbumsSection">
             <h2>Álbumes Guardados</h2>
+            <div style="margin-bottom: 20px; display: flex; gap: 10px; justify-content: center;">
+                <input type="text" id="searchInput" placeholder="Buscar por título..." style="padding: 10px; width: 60%; border-radius: 5px; border: none;">
+                <button onclick="searchAlbums()" style="padding: 10px; background-color: #14833b; color: white; font-weight: bold; border: none; border-radius: 5px; cursor: pointer;">Buscar</button>
+            </div>
             <div class="album-container" id="albumContainer"></div>
         </div>
     </div>
@@ -324,6 +328,35 @@
                 toast.classList.remove('show');
             }, 3000);
         }
+
+                async function searchAlbums() {
+            const searchTerm = document.getElementById('searchInput').value;
+            const response = await fetch(`${apiUrl}/albumes/buscar?query=${encodeURIComponent(searchTerm)}`);
+            const albums = await response.json();
+            const container = document.getElementById('albumContainer');
+            container.innerHTML = '';
+            albums.forEach(album => {
+                const albumDiv = document.createElement('div');
+                albumDiv.classList.add('album');
+                albumDiv.innerHTML = `
+                    <img src="${apiUrl}/archivos/${album.Imagen}" alt="${album.Titulo}">
+                    <div class="album-details">
+                        <h3>${album.Titulo}</h3>
+                        <p><strong>Artista:</strong> ${album.Artista}</p>
+                        <p><strong>Género:</strong> ${album.Genero}</p>
+                        <p><strong>Fecha:</strong> ${album.FechaLanzamiento.split('T')[0]}</p>
+                        <p><strong>Duración:</strong> ${album.DuracionTotal} minutos</p>
+                        <div class="buttons">
+                            <button class="button view" onclick="viewPDF('${album.ImagenPDF}')">Ver PDF</button>
+                            <button class="button edit" onclick="openEditModal(${album.id}, '${album.Titulo}', '${album.Artista}', '${album.Genero}', '${album.FechaLanzamiento}', ${album.DuracionTotal}, '${album.Productora}')">Editar</button>
+                            <button class="button delete" onclick="deleteAlbum(${album.id})">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(albumDiv);
+            });
+        }
+
 
         async function fetchAlbums() {
             const response = await fetch(`${apiUrl}/albumes`);
