@@ -40,11 +40,13 @@ const upload = multer({ storage: storage });
 
 // Conexión a la base de datos
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '1234567',
-    database: 'musicadb'
+    host: process.env.MYSQLHOST,
+    user: process.env.MYSQLUSER,
+    password: process.env.MYSQLPASSWORD,
+    database: process.env.MYSQL_DATABASE,
+    port: process.env.MYSQLPORT
 });
+
 db.connect(err => {
     if (err) {
         console.error('Error al conectar a la base de datos:', err);
@@ -52,6 +54,7 @@ db.connect(err => {
     }
     console.log('Conexión exitosa a la base de datos');
 });
+
 
 // Rutas
 app.post('/albumes/', upload.single('Imagen'), (req, res) => {
