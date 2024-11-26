@@ -12,12 +12,10 @@ const { body, validationResult } = require('express-validator');
 const app = express();
 const port = 3003;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Directorios para archivos
 const imageFolder = path.join(__dirname, 'archivos');
 const pdfFolder = path.join(__dirname, 'archivosgen');
 if (!fs.existsSync(imageFolder)) fs.mkdirSync(imageFolder);
@@ -26,7 +24,6 @@ if (!fs.existsSync(pdfFolder)) fs.mkdirSync(pdfFolder);
 app.use('/archivos', express.static(imageFolder));
 app.use('/archivosgen', express.static(pdfFolder));
 
-// Configuración de Multer para subir archivos
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, imageFolder);
@@ -38,7 +35,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// Conexión a la base de datos
 const db = mysql.createConnection({
     host: process.env.MYSQLHOST,
     user: process.env.MYSQLUSER,
@@ -56,7 +52,6 @@ db.connect(err => {
 });
 
 
-// Rutas
 app.post('/albumes/', upload.single('Imagen'), (req, res) => {
     console.log("Datos del formulario (req.body):", req.body);
     console.log("Archivo subido (req.file):", req.file);
@@ -179,7 +174,6 @@ app.put('/albumes/:id', (req, res) => {
 });
 
 
-// Inicio del servidor
 app.listen(port, () => {
     console.log(`Servidor corriendo en el puerto ${port}`);
 });

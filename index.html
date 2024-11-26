@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Álbumes Musicales</title>
     <style>
-        /* Estilo general */
+       
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
@@ -267,7 +267,6 @@
         </div>
     </div>
 
-    <!-- Modal para editar álbum -->
     <div id="editModal" class="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeEditModal()">×</span>
@@ -306,7 +305,6 @@
     <script>
         const apiUrl = 'https://crud-mn9f.onrender.com';
 
-        // Mostrar y ocultar secciones
         document.getElementById('addAlbumNav').onclick = () => {
             document.getElementById('addAlbumSection').style.display = 'block';
             document.getElementById('viewAlbumsSection').style.display = 'none';
@@ -318,7 +316,6 @@
             fetchAlbums();
         };
 
-        // Toast
         function showToast(message) {
             const toast = document.getElementById('toast');
             toast.textContent = message;
@@ -328,7 +325,6 @@
             }, 3000);
         }
 
-        // Obtener álbumes
         async function fetchAlbums() {
             const response = await fetch(`${apiUrl}/albumes`);
             const albums = await response.json();
@@ -356,12 +352,10 @@
             });
         }
 
-        // Ver PDF
         function viewPDF(pdfName) {
             window.open(`${apiUrl}/archivosgen/${pdfName}`, '_blank');
         }
 
-        // Abrir modal para editar
         function openEditModal(id, titulo, artista, genero, fecha, duracion, productora) {
             document.getElementById('editForm').dataset.id = id;
             document.getElementById('editTitulo').value = titulo;
@@ -373,12 +367,10 @@
             document.getElementById('editModal').style.display = 'flex';
         }
 
-        // Cerrar modal
         function closeEditModal() {
             document.getElementById('editModal').style.display = 'none';
         }
 
-        // Guardar cambios en edición
         document.getElementById('editForm').onsubmit = async (e) => {
             e.preventDefault();
             const id = e.target.dataset.id;
@@ -402,7 +394,6 @@
             fetchAlbums();
         };
 
-        // Eliminar álbum
         async function deleteAlbum(id) {
             const confirmDelete = confirm('¿Estás seguro de que quieres eliminar este álbum?');
             if (confirmDelete) {
@@ -412,7 +403,6 @@
             }
         }
 
-        // Agregar álbum
         document.getElementById('albumForm').onsubmit = async (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
