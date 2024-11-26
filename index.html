@@ -40,15 +40,11 @@
             padding: 20px;
         }
 
-        .hidden {
-            display: none;
-        }
-
         form {
             max-width: 400px;
             margin: auto;
             padding: 20px;
-            border: none;
+            border: 1px solid #333;
             border-radius: 10px;
             background-color: #1e1e1e;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
@@ -71,7 +67,7 @@
             width: 100%;
             padding: 10px;
             margin-bottom: 16px;
-            border: 1px solid #3a3a3a;
+            border: 1px solid #333;
             border-radius: 5px;
             background-color: #2a2a2a;
             color: white;
@@ -95,21 +91,19 @@
         }
 
         .album-container {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
-            justify-content: center;
         }
 
         .album {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             align-items: center;
             border-radius: 10px;
             background-color: #1e1e1e;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
             overflow: hidden;
-            width: 600px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -119,15 +113,14 @@
         }
 
         .album img {
-            width: 200px;
+            width: 100%;
             height: 200px;
             object-fit: cover;
-            border-right: 2px solid #121212;
         }
 
         .album-details {
-            padding: 20px;
-            flex: 1;
+            padding: 15px;
+            text-align: center;
         }
 
         .album-details h3 {
@@ -144,54 +137,46 @@
         .album-details .buttons {
             margin-top: 10px;
             display: flex;
+            justify-content: space-around;
             gap: 10px;
         }
 
-        .album-details a {
+        .album-details .button {
             padding: 10px 15px;
             text-decoration: none;
-            color: white;
-            background-color: #1db954;
             border-radius: 20px;
             font-size: 14px;
+            cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
-        .album-details a:hover {
+        .album-details .button.ver {
+            background-color: #1db954;
+            color: white;
+        }
+
+        .album-details .button.ver:hover {
             background-color: #14833b;
         }
 
-        .edit-button {
-            padding: 10px 15px;
-            color: white;
+        .album-details .button.editar {
             background-color: #f4c242;
-            border-radius: 20px;
-            font-size: 14px;
-            cursor: pointer;
-            border: none;
-            transition: background-color 0.3s ease;
+            color: white;
         }
 
-        .edit-button:hover {
+        .album-details .button.editar:hover {
             background-color: #d9a635;
         }
 
-        .delete-button {
-            padding: 10px 15px;
+        .album-details .button.eliminar {
+            background-color: #e53935;
             color: white;
-            background-color: #e53935; /* Botón rojo */
-            border-radius: 20px;
-            font-size: 14px;
-            cursor: pointer;
-            border: none;
-            transition: background-color 0.3s ease;
         }
 
-        .delete-button:hover {
+        .album-details .button.eliminar:hover {
             background-color: #c62828;
         }
 
-        /* Modal estilo */
         .modal {
             display: none;
             position: fixed;
@@ -228,7 +213,7 @@
             width: 100%;
             padding: 10px;
             margin-bottom: 16px;
-            border: 1px solid #3a3a3a;
+            border: 1px solid #333;
             border-radius: 5px;
             background-color: #2a2a2a;
             color: white;
