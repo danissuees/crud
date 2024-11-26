@@ -5,7 +5,200 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Álbumes Musicales</title>
     <style>
-        /* Estilos principales aquí (idénticos al código anterior) */
+        /* Estilo general */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #eaeaea;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1db954;
+            padding: 15px 20px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        #addAlbumSection {
+            display: block;
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #addAlbumSection h2 {
+            text-align: center;
+            color: #1db954;
+            margin-bottom: 20px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 14px;
+        }
+
+        input, select {
+            background-color: #2a2a2a;
+            color: white;
+        }
+
+        button {
+            background-color: #1db954;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #14833b;
+        }
+
+        #viewAlbumsSection {
+            display: none;
+        }
+
+        .album-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .album {
+            display: flex;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .album img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .album-details {
+            flex: 1;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button {
+            padding: 10px;
+            border-radius: 20px;
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            color: white;
+            flex: 1;
+        }
+
+        .button.view {
+            background-color: #1db954;
+        }
+
+        .button.edit {
+            background-color: #f4c242;
+        }
+
+        .button.delete {
+            background-color: #e53935;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content h2 {
+            color: #1db954;
+            text-align: center;
+        }
+
+        .modal-content label {
+            color: #b3b3b3;
+        }
+
+        .modal-close {
+            text-align: right;
+            cursor: pointer;
+            color: #b3b3b3;
+        }
+
+        .modal-close:hover {
+            color: white;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(20px);
+            z-index: 999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
