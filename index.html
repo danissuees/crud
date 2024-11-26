@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Álbumes Musicales</title>
     <style>
+        /* Estilo general */
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
@@ -18,67 +19,211 @@
             justify-content: space-between;
             align-items: center;
             background-color: #1db954;
-            color: white;
-            padding: 10px 20px;
+            padding: 15px 20px;
         }
 
         .navbar a {
             color: white;
             text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 5px;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        .navbar a:hover {
+            background-color: #14833b;
         }
 
         .content {
+            padding: 30px;
+        }
+
+        /* Formulario de agregar álbum */
+        #addAlbumSection {
+            display: block;
+            max-width: 500px;
+            margin: auto;
             padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #addAlbumSection h2 {
+            text-align: center;
+            color: #1db954;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #b3b3b3;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 14px;
+        }
+
+        input, select {
+            background-color: #2a2a2a;
+            color: white;
+        }
+
+        button {
+            background-color: #1db954;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #14833b;
+        }
+
+        /* Vista de álbumes */
+        #viewAlbumsSection {
+            display: none;
         }
 
         .album-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
             gap: 20px;
+            justify-content: center;
         }
 
         .album {
+            display: flex;
             background-color: #1e1e1e;
             border-radius: 10px;
-            padding: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 800px;
         }
 
         .album img {
-            width: 100%;
+            width: 200px;
             height: 200px;
             object-fit: cover;
-            border-radius: 10px;
         }
 
         .album-details {
-            padding: 10px;
-            text-align: center;
+            flex: 1;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .album-details h3 {
             color: #1db954;
+            margin-bottom: 10px;
+        }
+
+        .album-details p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #b3b3b3;
         }
 
         .buttons {
             display: flex;
-            justify-content: space-around;
-            margin-top: 10px;
+            gap: 10px;
         }
 
         .button {
-            padding: 5px 10px;
+            padding: 10px;
+            border-radius: 20px;
             border: none;
-            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
             color: white;
+            flex: 1;
         }
 
-        .button.view { background-color: #1db954; }
-        .button.edit { background-color: #f4c242; }
-        .button.delete { background-color: #e53935; }
+        .button.view {
+            background-color: #1db954;
+        }
+
+        .button.view:hover {
+            background-color: #14833b;
+        }
+
+        .button.edit {
+            background-color: #f4c242;
+        }
+
+        .button.edit:hover {
+            background-color: #d9a635;
+        }
+
+        .button.delete {
+            background-color: #e53935;
+        }
+
+        .button.delete:hover {
+            background-color: #c62828;
+        }
+
+        /* Modal para editar álbum */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content h2 {
+            color: #1db954;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-content label {
+            color: #b3b3b3;
+        }
+
+        .modal-content input, .modal-content button {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            text-align: right;
+            cursor: pointer;
+            color: #b3b3b3;
+        }
+
+        .modal-close:hover {
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -87,7 +232,8 @@
         <a href="#" id="viewAlbumsNav">Ver Álbumes</a>
     </div>
     <div class="content">
-        <div id="addAlbumSection" style="display: none;">
+        <!-- Formulario para agregar álbum -->
+        <div id="addAlbumSection">
             <form id="albumForm">
                 <h2>Agregar Álbum</h2>
                 <label for="Titulo">Título:</label>
@@ -111,14 +257,46 @@
                 <button type="submit">Guardar</button>
             </form>
         </div>
+
+        <!-- Vista de álbumes -->
         <div id="viewAlbumsSection">
             <h2>Álbumes Guardados</h2>
             <div class="album-container" id="albumContainer"></div>
         </div>
     </div>
+
+    <!-- Modal para editar álbum -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeEditModal()">×</span>
+            <form id="editForm">
+                <h2>Editar Álbum</h2>
+                <!-- Campos para edición -->
+                <label for="editTitulo">Título:</label>
+                <input type="text" id="editTitulo" name="Titulo" required>
+                <label for="editArtista">Artista:</label>
+                <input type="text" id="editArtista" name="Artista" required>
+                <label for="editGenero">Género:</label>
+                <select id="editGenero" name="Genero" required>
+                    <option value="Rock">Rock</option>
+                    <option value="Pop">Pop</option>
+                    <option value="Hip-Hop">Hip-Hop</option>
+                </select>
+                <label for="editFechaLanzamiento">Fecha de Lanzamiento:</label>
+                <input type="date" id="editFechaLanzamiento" name="FechaLanzamiento" required>
+                <label for="editDuracionTotal">Duración Total:</label>
+                <input type="number" id="editDuracionTotal" name="DuracionTotal" required>
+                <label for="editProductora">Productora:</label>
+                <input type="text" id="editProductora" name="Productora" required>
+                <button type="submit">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
     <script>
         const apiUrl = 'https://crud-mn9f.onrender.com';
 
+        // Navegación entre secciones
         document.getElementById('addAlbumNav').onclick = () => {
             document.getElementById('addAlbumSection').style.display = 'block';
             document.getElementById('viewAlbumsSection').style.display = 'none';
@@ -130,6 +308,7 @@
             fetchAlbums();
         };
 
+        // Obtener álbumes
         async function fetchAlbums() {
             const response = await fetch(`${apiUrl}/albumes`);
             const albums = await response.json();
@@ -148,7 +327,7 @@
                         <p><strong>Duración:</strong> ${album.DuracionTotal} minutos</p>
                         <div class="buttons">
                             <button class="button view" onclick="viewPDF('${album.ImagenPDF}')">Ver PDF</button>
-                            <button class="button edit" onclick="editAlbum(${album.id})">Editar</button>
+                            <button class="button edit" onclick="openEditModal(${album.id}, '${album.Titulo}', '${album.Artista}', '${album.Genero}', '${album.FechaLanzamiento}', ${album.DuracionTotal}, '${album.Productora}')">Editar</button>
                             <button class="button delete" onclick="deleteAlbum(${album.id})">Eliminar</button>
                         </div>
                     </div>
@@ -157,19 +336,49 @@
             });
         }
 
+        // Ver PDF
+        function viewPDF(pdfName) {
+            window.open(`${apiUrl}/archivosgen/${pdfName}`, '_blank');
+        }
+
+        // Modal para edición
+        function openEditModal(id, titulo, artista, genero, fecha, duracion, productora) {
+            document.getElementById('editForm').dataset.id = id;
+            document.getElementById('editTitulo').value = titulo;
+            document.getElementById('editArtista').value = artista;
+            document.getElementById('editGenero').value = genero;
+            document.getElementById('editFechaLanzamiento').value = fecha;
+            document.getElementById('editDuracionTotal').value = duracion;
+            document.getElementById('editProductora').value = productora;
+            document.getElementById('editModal').style.display = 'flex';
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        document.getElementById('editForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const id = e.target.dataset.id;
+            const formData = new FormData(e.target);
+            const data = {};
+            formData.forEach((value, key) => data[key] = value);
+            await fetch(`${apiUrl}/albumes/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            closeEditModal();
+            fetchAlbums();
+        };
+
+        // Eliminar álbum
         async function deleteAlbum(id) {
             await fetch(`${apiUrl}/albumes/${id}`, { method: 'DELETE' });
             fetchAlbums();
         }
 
-        function viewPDF(pdfName) {
-            window.open(`${apiUrl}/archivosgen/${pdfName}`, '_blank');
-        }
-
-        function editAlbum(id) {
-            alert('Edición pendiente para el álbum con ID: ' + id);
-        }
-
+        // Agregar álbum
         document.getElementById('albumForm').onsubmit = async (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
