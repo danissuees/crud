@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Álbumes Musicales</title>
     <style>
+        /* Tu CSS */
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
@@ -13,7 +13,6 @@
             background-color: #121212;
             color: #eaeaea;
         }
-
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -23,7 +22,6 @@
             padding: 10px 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-
         .navbar a {
             color: white;
             text-decoration: none;
@@ -31,76 +29,40 @@
             border-radius: 20px;
             transition: background-color 0.3s ease;
         }
-
         .navbar a:hover {
             background-color: #14833b;
         }
-
         .content {
             padding: 20px;
         }
-
         .hidden {
             display: none;
         }
-
         form {
             max-width: 400px;
             margin: auto;
             padding: 20px;
-            border: none;
             border-radius: 10px;
             background-color: #1e1e1e;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
         }
-
         form h2 {
             text-align: center;
             color: #1db954;
-            margin-bottom: 20px;
         }
-
-        label {
+        input, select, button {
             display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #b3b3b3;
-        }
-
-        input[type="text"], input[type="number"], input[type="date"], input[type="file"], select {
             width: 100%;
+            margin-bottom: 15px;
             padding: 10px;
-            margin-bottom: 16px;
-            border: 1px solid #3a3a3a;
             border-radius: 5px;
-            background-color: #2a2a2a;
-            color: white;
-            font-size: 14px;
         }
-
-        button {
-            background-color: #1db954;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #14833b;
-        }
-
         .album-container {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
         }
-
         .album {
             display: flex;
             flex-direction: row;
@@ -108,157 +70,33 @@
             border-radius: 10px;
             background-color: #1e1e1e;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
             width: 600px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        .album:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.7);
-        }
-
         .album img {
             width: 200px;
             height: 200px;
             object-fit: cover;
-            border-right: 2px solid #121212;
         }
-
         .album-details {
             padding: 20px;
             flex: 1;
         }
-
         .album-details h3 {
-            margin: 0 0 10px;
             color: #1db954;
         }
-
-        .album-details p {
-            margin: 5px 0;
-            color: #b3b3b3;
-            font-size: 14px;
-        }
-
-        .album-details .buttons {
-            margin-top: 10px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .album-details a {
-            padding: 10px 15px;
-            text-decoration: none;
-            color: white;
-            background-color: #1db954;
-            border-radius: 20px;
-            font-size: 14px;
-            transition: background-color 0.3s ease;
-        }
-
-        .album-details a:hover {
-            background-color: #14833b;
-        }
-
-        .edit-button {
-            padding: 10px 15px;
-            color: white;
-            background-color: #f4c242;
-            border-radius: 20px;
-            font-size: 14px;
-            cursor: pointer;
-            border: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .edit-button:hover {
-            background-color: #d9a635;
-        }
-
-        .delete-button {
-            padding: 10px 15px;
-            color: white;
-            background-color: #e53935; /* Botón rojo */
-            border-radius: 20px;
-            font-size: 14px;
-            cursor: pointer;
-            border: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .delete-button:hover {
-            background-color: #c62828;
-        }
-
-        /* Modal estilo */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            width: 400px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-content h2 {
-            color: #1db954;
-            text-align: center;
-        }
-
-        .modal-content label {
-            display: block;
-            margin-bottom: 8px;
-            color: #b3b3b3;
-        }
-
-        .modal-content input, .modal-content select {
-            width: 100%;
+        .album-details .buttons button {
+            margin-right: 5px;
             padding: 10px;
-            margin-bottom: 16px;
-            border: 1px solid #3a3a3a;
             border-radius: 5px;
-            background-color: #2a2a2a;
-            color: white;
-        }
-
-        .modal-content button {
-            width: 100%;
-            padding: 10px 20px;
-            margin-top: 10px;
-            background-color: #1db954;
             color: white;
             border: none;
-            border-radius: 20px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
         }
-
-        .modal-content button:hover {
-            background-color: #14833b;
+        .album-details .buttons .edit-button {
+            background-color: #f4c242;
         }
-
-        .modal-close {
-            text-align: right;
-            cursor: pointer;
-            color: #b3b3b3;
-            font-size: 16px;
-        }
-
-        .modal-close:hover {
-            color: white;
+        .album-details .buttons .delete-button {
+            background-color: #e53935;
         }
     </style>
 </head>
@@ -267,18 +105,14 @@
         <a href="#" id="addAlbumNav">Agregar Álbum</a>
         <a href="#" id="viewAlbumsNav">Ver Álbumes</a>
     </div>
-
     <div class="content">
-       
         <div id="addAlbumSection">
             <form id="uploadForm" enctype="multipart/form-data">
                 <h2>Agregar Álbum</h2>
                 <label for="Titulo">Título:</label>
                 <input type="text" id="Titulo" name="Titulo" required>
-
                 <label for="Artista">Artista:</label>
                 <input type="text" id="Artista" name="Artista" required>
-
                 <label for="Genero">Género:</label>
                 <select id="Genero" name="Genero" required>
                     <option value="Rock">Rock</option>
@@ -288,188 +122,55 @@
                     <option value="Clásica">Clásica</option>
                     <option value="Otro">Otro</option>
                 </select>
-
                 <label for="FechaLanzamiento">Fecha de Lanzamiento:</label>
                 <input type="date" id="FechaLanzamiento" name="FechaLanzamiento" required>
-
-                <label for="DuracionTotal">Duración Total (en minutos):</label>
-                <input type="number" id="DuracionTotal" name="DuracionTotal" step="1" min="1" required>
-
+                <label for="DuracionTotal">Duración Total:</label>
+                <input type="number" id="DuracionTotal" name="DuracionTotal" required>
                 <label for="Productora">Productora:</label>
                 <input type="text" id="Productora" name="Productora" required>
-
                 <label for="Imagen">Imagen:</label>
                 <input type="file" id="Imagen" name="Imagen" accept="image/*" required>
-
                 <button type="submit">Registrar Álbum</button>
             </form>
         </div>
-
-       
         <div id="viewAlbumsSection" class="hidden">
             <h2>Álbumes Guardados</h2>
             <div class="album-container" id="albumContainer"></div>
         </div>
     </div>
-
-   
-    <div class="modal" id="editModal">
-        <div class="modal-content">
-            <span class="modal-close" id="closeModal">×</span>
-            <h2>Editar Álbum</h2>
-            <form id="editForm">
-                <label for="editTitulo">Título:</label>
-                <input type="text" id="editTitulo" name="Titulo" required>
-
-                <label for="editArtista">Artista:</label>
-                <input type="text" id="editArtista" name="Artista" required>
-
-                <label for="editGenero">Género:</label>
-                <select id="editGenero" name="Genero" required>
-                    <option value="Rock">Rock</option>
-                    <option value="Pop">Pop</option>
-                    <option value="Hip-Hop">Hip-Hop</option>
-                    <option value="Jazz">Jazz</option>
-                    <option value="Clásica">Clásica</option>
-                    <option value="Otro">Otro</option>
-                </select>
-
-                <label for="editFecha">Fecha de Lanzamiento:</label>
-                <input type="date" id="editFecha" name="FechaLanzamiento" required>
-
-                <label for="editDuracion">Duración Total (en minutos):</label>
-                <input type="number" id="editDuracion" name="DuracionTotal" step="1" min="1" required>
-
-                <label for="editProductora">Productora:</label>
-                <input type="text" id="editProductora" name="Productora" required>
-
-                <button type="submit">Guardar Cambios</button>
-            </form>
-        </div>
-    </div>
-
     <script>
-        const addAlbumNav = document.getElementById('addAlbumNav');
-        const viewAlbumsNav = document.getElementById('viewAlbumsNav');
-        const addAlbumSection = document.getElementById('addAlbumSection');
-        const viewAlbumsSection = document.getElementById('viewAlbumsSection');
-        const editModal = document.getElementById('editModal');
-        const closeModal = document.getElementById('closeModal');
-        const editForm = document.getElementById('editForm');
-        let currentAlbumId;
+        const apiUrl = 'https://crud-mn9f.onrender.com'; // URL del backend
 
-        addAlbumNav.onclick = () => {
-            addAlbumSection.style.display = 'block';
-            viewAlbumsSection.style.display = 'none';
+        document.getElementById('addAlbumNav').onclick = () => {
+            document.getElementById('addAlbumSection').style.display = 'block';
+            document.getElementById('viewAlbumsSection').style.display = 'none';
         };
 
-        viewAlbumsNav.onclick = () => {
-            addAlbumSection.style.display = 'none';
-            viewAlbumsSection.style.display = 'block';
+        document.getElementById('viewAlbumsNav').onclick = () => {
+            document.getElementById('addAlbumSection').style.display = 'none';
+            document.getElementById('viewAlbumsSection').style.display = 'block';
             fetchAlbums();
         };
 
-      
-        closeModal.onclick = () => {
-            editModal.style.display = 'none';
-        };
-
-        window.onclick = (event) => {
-            if (event.target === editModal) {
-                editModal.style.display = 'none';
-            }
-        };
-
-       
-        document.getElementById('uploadForm').onsubmit = async (event) => {
-            event.preventDefault();
-            const formData = new FormData(document.getElementById('uploadForm'));
-
-            try {
-                const response = await fetch('http://localhost:3003/albumes/', {
-                    method: 'POST',
-                    body: formData,
-                });
-
-                if (response.ok) {
-                    alert('Álbum registrado con éxito');
-                    document.getElementById('uploadForm').reset();
-                } else {
-                    alert('Error al registrar álbum');
-                }
-            } catch (error) {
-                console.error('Error al registrar álbum:', error);
-            }
-        };
-
-       
-        editForm.onsubmit = async (event) => {
-            event.preventDefault();
-            const formData = new FormData(editForm);
-
-            const albumData = {
-                Titulo: formData.get('Titulo'),
-                Artista: formData.get('Artista'),
-                Genero: formData.get('Genero'),
-                FechaLanzamiento: formData.get('FechaLanzamiento'),
-                DuracionTotal: formData.get('DuracionTotal'),
-                Productora: formData.get('Productora'),
-            };
-
-            try {
-                const response = await fetch(`http://localhost:3003/albumes/${currentAlbumId}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(albumData),
-                });
-
-                if (response.ok) {
-                    alert('Álbum actualizado con éxito');
-                    editModal.style.display = 'none';
-                    fetchAlbums();
-                } else {
-                    alert('Error al actualizar álbum');
-                }
-            } catch (error) {
-                console.error('Error al actualizar álbum:', error);
-            }
-        };
-
-       
-        function openEditModal(album) {
-            currentAlbumId = album.id;
-            document.getElementById('editTitulo').value = album.Titulo;
-            document.getElementById('editArtista').value = album.Artista;
-            document.getElementById('editGenero').value = album.Genero;
-            document.getElementById('editFecha').value = album.FechaLanzamiento.split('T')[0];
-            document.getElementById('editDuracion').value = album.DuracionTotal;
-            document.getElementById('editProductora').value = album.Productora;
-            editModal.style.display = 'flex';
-        }
-
         async function fetchAlbums() {
             try {
-                const response = await fetch('http://localhost:3003/albumes');
+                const response = await fetch(`${apiUrl}/albumes`);
                 const albums = await response.json();
                 const container = document.getElementById('albumContainer');
                 container.innerHTML = '';
-
                 albums.forEach(album => {
                     const albumElement = document.createElement('div');
                     albumElement.classList.add('album');
                     albumElement.innerHTML = `
-                        <img src="http://localhost:3003/archivos/${album.Imagen}" alt="${album.Titulo}">
+                        <img src="${apiUrl}/archivos/${album.Imagen}" alt="${album.Titulo}">
                         <div class="album-details">
                             <h3>${album.Titulo}</h3>
                             <p><strong>Artista:</strong> ${album.Artista}</p>
                             <p><strong>Género:</strong> ${album.Genero}</p>
-                            <p><strong>Fecha de Lanzamiento:</strong> ${album.FechaLanzamiento.split('T')[0]}</p>
-                            <p><strong>Duración Total:</strong> ${album.DuracionTotal} minutos</p>
-                            <p><strong>Productora:</strong> ${album.Productora}</p>
+                            <p><strong>Fecha:</strong> ${album.FechaLanzamiento}</p>
+                            <p><strong>Duración:</strong> ${album.DuracionTotal}</p>
                             <div class="buttons">
-                                <a href="http://localhost:3003/albumes/${album.id}/pdf" target="_blank">Ver PDF</a>
-                                <button class="edit-button" onclick='openEditModal(${JSON.stringify(album)})'>Editar</button>
-                                <button class="delete-button" onclick="deleteAlbum(${album.id})">Eliminar</button>
+                                <button onclick="deleteAlbum(${album.id})" class="delete-button">Eliminar</button>
                             </div>
                         </div>
                     `;
@@ -480,20 +181,38 @@
             }
         }
 
-        async function deleteAlbum(albumId) {
-            if (!confirm('¿Estás seguro de que deseas eliminar este álbum?')) return;
-
+        document.getElementById('uploadForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
             try {
-                const response = await fetch(`http://localhost:3003/albumes/${albumId}`, { method: 'DELETE' });
-
+                const response = await fetch(`${apiUrl}/albumes`, {
+                    method: 'POST',
+                    body: formData,
+                });
                 if (response.ok) {
-                    alert('Álbum eliminado con éxito');
-                    fetchAlbums();
+                    alert('Álbum registrado con éxito');
+                    e.target.reset();
                 } else {
-                    alert('Error al eliminar álbum');
+                    alert('Error al registrar el álbum');
                 }
             } catch (error) {
-                console.error('Error al eliminar álbum:', error);
+                console.error('Error al registrar álbum:', error);
+            }
+        };
+
+        async function deleteAlbum(albumId) {
+            try {
+                const response = await fetch(`${apiUrl}/albumes/${albumId}`, {
+                    method: 'DELETE',
+                });
+                if (response.ok) {
+                    alert('Álbum eliminado');
+                    fetchAlbums();
+                } else {
+                    alert('Error al eliminar el álbum');
+                }
+            } catch (error) {
+                console.error('Error al eliminar el álbum:', error);
             }
         }
 
