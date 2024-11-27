@@ -1,5 +1,4 @@
 
-
 const express = require('express');
 const path = require('path');
 const multer = require('multer');
@@ -10,7 +9,7 @@ const { jsPDF } = require("jspdf");
 const { body, validationResult } = require('express-validator');
 
 const app = express();
-const port = 3003;
+const port = process.env.MYSQLPORT || 3003;
 
 app.use(cors());
 app.use(express.json());
@@ -33,6 +32,7 @@ const storage = multer.diskStorage({
         cb(null, `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`);
     }
 });
+
 const upload = multer({ storage: storage });
 
 const db = mysql.createConnection({
@@ -145,7 +145,6 @@ app.get('/albumes/buscar', (req, res) => {
         res.json(results);
     });
 });
-
 
 app.delete('/albumes/:id', (req, res) => {
     const albumId = req.params.id;
